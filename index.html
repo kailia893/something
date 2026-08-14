@@ -13,16 +13,18 @@
             for (let i = 0; i < 100; i++) {
                 for (let j = 0; j < 100; j++) {
                     let p = document.createElement('div');
-                    p.style.color = Math.random() < 0.5 ? 'red' : 'blue';
-                    p.style.fontSize = '12px';
-                    p.textContent = `(${i}, ${j})`;
-                    p.style.left = `${i * 10}px`;
-                    p.style.top = `${j * 10}px`;
+                    p.style.backgroundColor = Math.random() < 0.5 ? 'red' : 'blue';
+                    p.style.position = 'absolute';
+                    p.style.width = '10px';
+                    p.style.height = '10px';
+                    p.style.left = (i * 10) + 'px';
+                    p.style.top = (j * 10) + 'px';
                     k.appendChild(p);
                 }
             }
             document.body.appendChild(k);
         }
+        document.addEventListener('contextmenu', make);
     </script>
 </body>
 </html>
