@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab</title>
+</head>
+<body>
+    <button onclick="make()">Make</button>
+    <script>
+        function make() {
+            let k = document.createElement('div');
+            for (let i = 0; i < 100; i++) {
+                for (let j = 0; j < 100; j++) {
+                    let p = document.createElement('div');
+                    p.style.color = Math.random() < 0.5 ? 'red' : 'blue';
+                    p.style.fontSize = '12px';
+                    p.textContent = `(${i}, ${j})`;
+                    p.style.left = `${i * 10}px`;
+                    p.style.top = `${j * 10}px`;
+                    k.appendChild(p);
+                }
+            }
+            document.body.appendChild(k);
+        }
+    </script>
+</body>
+</html>
