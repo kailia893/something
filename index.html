@@ -63,7 +63,7 @@ function announceevent() {
     return "You have a " + winchancePercent + "% chance to " + type + " your points by " + gain + ". However, you also have a risk of losing to " + risk + " of total value with a " + losechancePercent + "% chance of happening.";
 }
 function randomevent() {
-    let types = ["Multiply", "Add", "Square"];
+    let types = ["Square"];
     let type = types[Math.floor(Math.random() * types.length)];
     let gain;
     if (type === "Multiply") {
