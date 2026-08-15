@@ -19,7 +19,7 @@ let eventt = []; // type, gain, risk, winchance, losechance
 let gambleAmount = 0;
 
 function evaluateevent() {
-    let ret = "Nothing happened! You kept your wagered points.";
+    let ret = "Nothing happened! You kept your gambled points.";
     let random = Math.random();
     
     if (random < eventt[3]) {
@@ -63,11 +63,11 @@ function start() {
 }
 
 function announceevent() {
-    let type = Math.random() < 0.2 ? eventt[0] : "unknown";
-    let gain = Math.random() < 0.2 ? eventt[1] : "unknown";
-    let risk = Math.random() < 0.2 ? eventt[2] : "unknown";
-    let winchance = Math.random() < 0.2 ? eventt[3] : "unknown";
-    let losechance = Math.random() < 0.2 ? eventt[4] : "unknown";
+    let type = Math.random() < 0.8 ? eventt[0] : "unknown";
+    let gain = Math.random() < 0.8 ? eventt[1] : "unknown";
+    let risk = Math.random() < 0.8 ? eventt[2] : "unknown";
+    let winchance = Math.random() < 0.8 ? eventt[3] : "unknown";
+    let losechance = Math.random() < 0.8 ? eventt[4] : "unknown";
 
     let winStr = typeof winchance === "number" ? (winchance * 100).toFixed(2) + "%" : "an unknown";
     let loseStr = typeof losechance === "number" ? (losechance * 100).toFixed(2) + "%" : "an unknown";
@@ -88,7 +88,7 @@ function announceevent() {
     let winChanceText = winStr.endsWith("%") ? "a " + winStr + " chance" : "an unknown chance";
     let loseChanceText = loseStr.endsWith("%") ? "a " + loseStr + " chance" : "an unknown chance";
 
-    return "You have " + winChanceText + " to " + actionStr + ". However, you face " + loseChanceText + " of losing " + riskStr + " of your wagered points.";
+    return "You have " + winChanceText + " to " + actionStr + ". However, you face " + loseChanceText + " of losing " + riskStr + " of your gambled points.";
 }
 
 function randomevent() {
@@ -136,7 +136,7 @@ let num = 0;
 let ready = false;
 
 function gamble() {
-    ui.textContent = "You have " + val + " points. How many points would you like to wager?";
+    ui.textContent = "You have " + val + " points. How many points would you like to gamble?";
     ready = false;
     num = 0;
     randomevent();
