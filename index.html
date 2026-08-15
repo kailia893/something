@@ -1,19 +1,28 @@
 <body>
+
+    <!-- Crucial: The function MUST be tied directly to a user click to prevent the popup blocker -->
+    <button onclick="generateSafeWindow()">Open Dynamic Page Safely</button>
+
     <script>
-        function start() {
-            const base64DataUrl = "data:text/html;base64,PGJvZHk+DQogICAgPHNjcmlwdD4NCiAgICAgICAgZnVuY3Rpb24gc3RhcnQoKSB7DQogICAgICAgICAgICBjb25zdCBiYXNlNjREYXRhVXJsID0gImRhdGE6dGV4dC9odG1sO2Jhc2U2NCxDZ29LUENGRVQwTlVXVkJGSUdoMGJXdytDanhvZEcxc0lHeGhibWM5SW1WdUlpQjBjbUZ1YzJ4aGRHVTlJbTV2SWo0S1BHaGxZV1ErQ2lBZ0lDQThiV1YwWVNCamFHRnljMlYwUFNKVlZFWXRPQ0krQ2lBZ0lDQThiV1YwWVNCdVlXMWxQU0oyYVdWM2NHOXlkQ0lnWTI5dWRHVnVkRDBpZDJsa2RHZzlaR1YyYVdObExYZHBaSFJvTENCcGJtbDBhV0ZzTFhOallXeGxQVEV1TUNJK0NpQWdJQ0E4ZEdsMGJHVStWR0ZpUEM5MGFYUnNaVDRLUEM5b1pXRmtQZ284WW05a2VUNEtJQ0FnSUR4aWRYUjBiMjRnYjI1amJHbGphejBpYldGclpTZ3BJajVOWVd0bFBDOWlkWFIwYjI0K0NpQWdJQ0E4YzJOeWFYQjBQZ29nSUNBZ0lDQWdJR1oxYm1OMGFXOXVJRzFoYTJVb0tTQjdDaUFnSUNBZ0lDQWdJQ0FnSUd4bGRDQnJJRDBnWkc5amRXMWxiblF1WTNKbFlYUmxSV3hsYldWdWRDZ25aR2wySnlrN0NpQWdJQ0FnSUNBZ0lDQWdJR1p2Y2lBb2JHVjBJR2tnUFNBd095QnBJRHdnTVRBd095QnBLeXNwSUhzS0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUdadmNpQW9iR1YwSUdvZ1BTQXdPeUJxSUR3Z01UQXdPeUJxS3lzcElIc0tJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0JzWlhRZ2NDQTlJR1J2WTNWdFpXNTBMbU55WldGMFpVVnNaVzFsYm5Rb0oyUnBkaWNwT3dvZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lIQXVjM1I1YkdVdVltRmphMmR5YjNWdVpFTnZiRzl5SUQwZ1RXRjBhQzV5WVc1a2IyMG9LU0E4SURBdU5TQS9JQ2R5WldRbklEb2dKMkpzZFdVbk93b2dJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJSEF1YzNSNWJHVXVjRzl6YVhScGIyNGdQU0FuWVdKemIyeDFkR1VuT3dvZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lIQXVjM1I1YkdVdWQybGtkR2dnUFNBbk1UQndlQ2M3Q2lBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ2NDNXpkSGxzWlM1b1pXbG5hSFFnUFNBbk1UQndlQ2M3Q2lBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ2NDNXpkSGxzWlM1c1pXWjBJRDBnS0drZ0tpQXhNQ2tnS3lBbmNIZ25Pd29nSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUhBdWMzUjViR1V1ZEc5d0lEMGdLR29nS2lBeE1Da2dLeUFuY0hnbk93b2dJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJR3N1WVhCd1pXNWtRMmhwYkdRb2NDazdDaUFnSUNBZ0lDQWdJQ0FnSUNBZ0lDQjlDaUFnSUNBZ0lDQWdJQ0FnSUgwS0lDQWdJQ0FnSUNBZ0lDQWdaRzlqZFcxbGJuUXVZbTlrZVM1aGNIQmxibVJEYUdsc1pDaHJLVHNLSUNBZ0lDQWdJQ0I5Q2lBZ0lDQThMM05qY21sd2RENEtQQzlpYjJSNVBnbzhMMmgwYld3K0Nnb0tDZ29LQ2c9PSIgDQogICAgICAgICAgICBjb25zdCBuZXdXaW5kb3cgPSB3aW5kb3cub3BlbignYWJvdXQ6YmxhbmsnLCAnX2JsYW5rJyk7DQogICAgICAgICAgICBjb25zdCBpZnJhbWVDb2RlID0gYA0KICAgICAgICAgICAgICAgIDxpZnJhbWUgc3JjPSIke2Jhc2U2NERhdGFVcmx9IiANCiAgICAgICAgICAgICAgICAgICAgICAgIHN0eWxlPSJib3JkZXI6bm9uZTsgcG9zaXRpb246Zml4ZWQ7IHRvcDowOyBsZWZ0OjA7IHdpZHRoOjEwMCU7IGhlaWdodDoxMDAlOyIgDQogICAgICAgICAgICAgICAgICAgICAgICBhbGxvd2Z1bGxzY3JlZW4+DQogICAgICAgICAgICAgICAgPC9pZnJhbWU+YDsNCiAgICAgICAgICAgIG5ld1dpbmRvdy5kb2N1bWVudC5vcGVuKCk7DQogICAgICAgICAgICBuZXdXaW5kb3cuZG9jdW1lbnQud3JpdGUoaWZyYW1lQ29kZSk7DQogICAgICAgICAgICBuZXdXaW5kb3cuZG9jdW1lbnQuY2xvc2UoKTsNCiAgICAgICAgfQ0KICAgICAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdET01Db250ZW50TG9hZGVkJywgc3RhcnQpOw0KICAgIDwvc2NyaXB0Pg0KPC9ib2R5Pg==" 
-            const newWindow = window.open('about:blank', '_blank');
-            const iframeCode = `
-                <iframe src="${base64DataUrl}" 
-                        style="border:none; position:fixed; top:0; left:0; width:100%; height:100%;" 
-                        allowfullscreen>
-                </iframe>`;
-            newWindow.document.open();
-            setTimeout(() => {
-                newWindow.document.write(iframeCode);
-                newWindow.document.close();
-            }, 3000);
+        function generateSafeWindow() {
+            // 1. Your raw HTML code (Supports all quotes and backticks safely)
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Dynamically Generated Page</title>
+                    <style>body { font-family: sans-serif; text-align: center; padding: 50px; }</style>
+                </head>
+                <body>
+                    <h1>Success!</h1>
+                    <p>This window was opened safely using a secure Blob Object URL.</p>
+                </body>
+                </html>
+            `;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const blobUrl = URL.createObjectURL(blob);
+            window.open(blobUrl, '_blank');
         }
-        document.addEventListener('DOMContentLoaded', start);
     </script>
+
 </body>
