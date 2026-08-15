@@ -22,20 +22,24 @@ function evaluateevent() {
     if (random < eventt[3]) {
         if (eventt[0] === "Multiply") {
             val *= eventt[1];
+            val = Math.ceil(val);
             ret = "Success! Your points have been multiplied by " + eventt[1] + ".";
         }
         else if (eventt[0] === "Add") {
             val += eventt[1];
+            val = Math.ceil(val);
             ret = "Success! Your points have been increased by " + eventt[1] + ".";
         }
         else if (eventt[0] === "Square") {
             val *= val;
+            val = Math.ceil(val);
             ret = "Success! Your points have been squared.";
         }
     }
     else if (random < eventt[3] + eventt[4]) {
         let lossAmount = Math.floor(val * eventt[2] / 100);
         val -= lossAmount;
+        val = Math.ceil(val);
         ret = "You lost " + lossAmount + " points!";
     }
     return ret;
@@ -49,12 +53,14 @@ function start() {
     ui.appendChild(display);
 }
 function announceevent() {
-    let type = Math.random() < 0.3 ? eventt[0] : "unknown";
-    let gain = Math.random() < 0.3 ? eventt[1] : "unknown";
-    let risk = Math.random() < 0.3 ? eventt[2] : "unknown";
-    let winchance = Math.random() < 0.3 ? eventt[3] : "unknown";
-    let losechance = Math.random() < 0.3 ? eventt[4] : "unknown";
-    return "You have a " + (winchance*100).toFixed(2) + "% chance to " + type + " your points by " + gain + ". However, you also have a risk of losing to " + risk + " of total value with a " + (losechance*100).toFixed(2) + "% chance of happening.";
+    let type = Math.random() < 0.2 ? eventt[0] : "unknown";
+    let gain = Math.random() < 0.2 ? eventt[1] : "unknown";
+    let risk = Math.random() < 0.2 ? eventt[2] : "unknown";
+    let winchance = Math.random() < 0.2 ? eventt[3] : "unknown";
+    let losechance = Math.random() < 0.2 ? eventt[4] : "unknown";
+    let winchancePercent = typeof winchance === "number" ? (winchance*100).toFixed(2) : "unknown";
+    let losechancePercent = typeof losechance === "number" ? (losechance*100).toFixed(2) : "unknown";
+    return "You have a " + winchancePercent + "% chance to " + type + " your points by " + gain + ". However, you also have a risk of losing to " + risk + " of total value with a " + losechancePercent + "% chance of happening.";
 }
 function randomevent() {
     let types = ["Multiply", "Add", "Square"];
@@ -106,7 +112,12 @@ function gamble() {
     ui.appendChild(text);
     let confirm = document.createElement("button");
     confirm.textContent = "Confirm";
-    confirm.onclick = start;
+    confirm.onclick = function() {
+        let multiplier = parseFloat(text.value) || 1;
+        eventt[1] *= multiplier;
+        eventt[2] *= multiplier;
+        start();
+    };
     ui.appendChild(confirm);
 }
 gamble();
