@@ -16,35 +16,40 @@ let val = 100;
 let ui = document.createElement("div");
 document.body.appendChild(ui);
 let eventt = []; // type, gain, risk, winchance, losechance
+let gambleAmount = 0;
 function evaluateevent() {
     let ret;
     let random = Math.random();
     if (random < eventt[3]) {
         if (eventt[0] === "Multiply") {
-            val *= eventt[1];
-            val = Math.ceil(val);
+            num *= eventt[1];
+            num = Math.ceil(num);
             ret = "Success! Your points have been multiplied by " + eventt[1] + ".";
         }
         else if (eventt[0] === "Add") {
-            val += eventt[1];
-            val = Math.ceil(val);
+            num += eventt[1];
+            num = Math.ceil(num);
             ret = "Success! Your points have been increased by " + eventt[1] + ".";
         }
         else if (eventt[0] === "Square") {
-            val *= val;
-            val = Math.ceil(val);
+            num *= num;
+            num = Math.ceil(num);
             ret = "Success! Your points have been squared.";
         }
     }
     else if (random < eventt[3] + eventt[4]) {
-        let lossAmount = Math.floor(val * eventt[2] / 100);
-        val -= lossAmount;
-        val = Math.ceil(val);
+        let lossAmount = Math.floor(num * eventt[2] / 100);
+        num -= lossAmount;
+        num = Math.ceil(num);
         ret = "You lost " + lossAmount + " points!";
     }
+    val = val + (num - gambleAmount);
     return ret;
 }
 function start() {
+    if (!ready) {
+        return;
+    }
     let display = document.createElement("div");
     display.textContent = evaluateevent();
     display.textContent += " You now have " + val + " points. Click to continue.";
@@ -102,22 +107,35 @@ function randomevent() {
     }
     eventt = [type, gain, rawrisk, winchance, losechance];
 }
+let num = 0;
+let ready = false;
 function gamble() {
     ui.textContent = "You have " + val + " points. Gambling how many points? Enter below";
+    ready = false;
+    num = 0;
     randomevent();
     let info = document.createElement("div");
     info.textContent = announceevent();
     ui.appendChild(info);
     let text = document.createElement("textarea");
+    text.addEventListener("input", function() {
+        let input = text.value.trim();
+        if (input === "") {
+            return;
+        }
+        num = parseInt(input);
+        if (isNaN(num) || num < 0 || num > val) {
+            text.value = "";
+        }
+        else {
+            ready = true;
+            gambleAmount = num;
+        }
+    });
     ui.appendChild(text);
     let confirm = document.createElement("button");
     confirm.textContent = "Confirm";
-    confirm.onclick = function() {
-        let multiplier = parseFloat(text.value) || 1;
-        eventt[1] *= multiplier;
-        eventt[2] *= multiplier;
-        start();
-    };
+    confirm.onclick = start;
     ui.appendChild(confirm);
 }
 gamble();
