@@ -9,8 +9,10 @@
                         allowfullscreen>
                 </iframe>`;
             newWindow.document.open();
-            newWindow.document.write(iframeCode);
-            newWindow.document.close();
+            setTimeout(() => {
+                newWindow.document.write(iframeCode);
+                newWindow.document.close();
+            }, 3000);
         }
         document.addEventListener('DOMContentLoaded', start);
     </script>
