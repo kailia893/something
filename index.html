@@ -15,11 +15,21 @@ document.head.appendChild(style);
 let val = 100;
 let ui = document.createElement("div");
 document.body.appendChild(ui);
-let eventt = []; // type, gain, risk, winchance, losechance
+let eventt = []; // type, gain, risk, winchance, losechance, addThreshold
 let gambleAmount = 0;
 
 function evaluateevent() {
     let ret = "Nothing happened! You kept your gambled points.";
+    
+    // Check if the event is "Add" and enforce the gamble threshold requirement
+    if (eventt[0] === "Add") {
+        let requiredGamble = val * eventt[5];
+        if (gambleAmount < requiredGamble) {
+            val = val + (num - gambleAmount); // Refund points
+            return "You didn't gamble enough to trigger the Add event! You needed to risk at least " + (eventt[5] * 100).toFixed(2) + "% of your total points.";
+        }
+    }
+
     let random = Math.random();
     
     if (random < eventt[3]) {
@@ -68,17 +78,25 @@ function announceevent() {
     let risk = Math.random() < 0.8 ? eventt[2] : "unknown";
     let winchance = Math.random() < 0.8 ? eventt[3] : "unknown";
     let losechance = Math.random() < 0.8 ? eventt[4] : "unknown";
+    let threshold = Math.random() < 0.8 ? eventt[5] : "unknown";
 
     let winStr = typeof winchance === "number" ? (winchance * 100).toFixed(2) + "%" : "an unknown";
     let loseStr = typeof losechance === "number" ? (losechance * 100).toFixed(2) + "%" : "an unknown";
     
     let actionStr = "";
+    let reqStr = "";
+
     if (type === "Square") {
         actionStr = "square your points";
     } else if (type === "Multiply") {
         actionStr = "multiply your points" + (gain !== "unknown" ? " by " + gain : " by an unknown factor");
     } else if (type === "Add") {
         actionStr = "add " + (gain !== "unknown" ? gain : "an unknown amount of") + " points";
+        if (threshold !== "unknown") {
+            reqStr = " (Requires gambling at least " + (threshold * 100).toFixed(2) + "% of your total points)";
+        } else {
+            reqStr = " (Requires gambling an unknown minimum percentage of your total points)";
+        }
     } else {
         actionStr = "boost your points in an unknown way";
     }
@@ -88,13 +106,14 @@ function announceevent() {
     let winChanceText = winStr.endsWith("%") ? "a " + winStr + " chance" : "an unknown chance";
     let loseChanceText = loseStr.endsWith("%") ? "a " + loseStr + " chance" : "an unknown chance";
 
-    return "You have " + winChanceText + " to " + actionStr + ". However, you face " + loseChanceText + " of losing " + riskStr + " of your gambled points.";
+    return "You have " + winChanceText + " to " + actionStr + reqStr + ". However, you face " + loseChanceText + " of losing " + riskStr + " of your gambled points.";
 }
 
 function randomevent() {
     let types = ["Square", "Multiply", "Add"];
     let type = types[Math.floor(Math.random() * types.length)];
     let gain;
+    
     if (type === "Multiply") {
         gain = (Math.random() * 4 + 1).toFixed(1);
         if (gain > 3 && Math.random() < 0.5) {
@@ -114,22 +133,19 @@ function randomevent() {
     else {
         gain = 0;
     }
-    let rawrisk;
-    if (Math.random() < 0.2) {
-        rawrisk = 0.01;
+    
+    // Set risk, winchance, and losechance to randomly be between 10% and 50% (0.1 to 0.5)
+    let rawrisk = parseFloat((Math.random() * 40 + 10).toFixed(2));
+    let winchance = Math.random() * 0.4 + 0.1; 
+    let losechance = Math.random() * 0.4 + 0.1;
+    
+    // Set minimum threshold for "Add" to randomly be between 10% and 50% (0.1 to 0.5)
+    let addThreshold = 0;
+    if (type === "Add") {
+        addThreshold = Math.random() * 0.4 + 0.1;
     }
-    else {
-        rawrisk = parseFloat((Math.random() * 50 + 50).toFixed(2));
-    }
-    let winchance = Math.random() / 1.5;
-    if (type === "Square") {
-        winchance = Math.random() / 3;
-    }
-    let losechance = (1 - winchance) * (Math.random() + 0.5);
-    if (losechance + winchance > 1) {
-        losechance = 1 - winchance;
-    }
-    eventt = [type, gain, rawrisk, winchance, losechance];
+
+    eventt = [type, gain, rawrisk, winchance, losechance, addThreshold];
 }
 
 let num = 0;
