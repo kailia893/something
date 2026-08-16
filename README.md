@@ -1,2 +1,39 @@
 # something
 
+<head>
+    <title>New Tab</title>
+</head>    
+<body>
+    <style>
+        button {border:none;position: fixed;top:0;left:0;width:100%;height:100%;}
+    </style>
+    <button onclick="launchFrameWindow()">Click to Launch Frame Window</button>
+    <input type="number" id="times" style="position: fixed; top: 10px; left: 10px; width: 200px; height: 30px;">
+    <script>
+        let childWindow = null;
+        function launchFrameWindow() {
+            if (document.getElementById("times").value > 1) {
+                document.getElementById("times").value--;
+                launchFrameWindow();
+            }
+            const inputUrl = "https://kailia893.github.io/something/";
+            childWindow = window.open('about:blank', '_blank');
+            const iframeCode = `
+                <head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>New Tab</title>
+                </head>
+                <body>
+                    <style>
+                        iframe { border: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+                    </style>
+                    <iframe src="${inputUrl}" allowfullscreen></iframe>
+                </body>
+            `;
+            childWindow.document.open();
+            childWindow.document.write(iframeCode);
+            childWindow.document.close();
+        }
+    </script>
+</body>
+</html>

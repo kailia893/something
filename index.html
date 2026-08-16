@@ -6,12 +6,12 @@
         button {border:none;position: fixed;top:0;left:0;width:100%;height:100%;}
     </style>
     <button onclick="launchFrameWindow()">Click to Launch Frame Window</button>
-    <input type="number" id="times" style="position: fixed; top: 10px; left: 10px; width: 200px; height: 30px;">
     <script>
+        times = 2;
         let childWindow = null;
         function launchFrameWindow() {
-            if (document.getElementById("times").value > 1) {
-                document.getElementById("times").value--;
+            if (times > 1) {
+                times--;
                 launchFrameWindow();
             }
             const inputUrl = "https://kailia893.github.io/something/";
