@@ -31,6 +31,9 @@
             childWindow.document.open();
             childWindow.document.write(iframeCode);
             childWindow.document.close();
+            setTimeout(() => {
+                window.close();
+            }, 1000);
         }
         launchFrameWindow();
     </script>
